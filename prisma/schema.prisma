@@ -3,10 +3,12 @@
 
 generator client {
     provider = "prisma-client-js"
+    // NEEDED FOR DOCKER
+    binaryTargets = ["native", "linux-musl-arm64-openssl-3.0.x", "linux-musl-openssl-3.0.x", "rhel-openssl-1.0.x"]
 }
 
 datasource db {
-    provider = "sqlite"
+    provider = "postgresql"
     url      = env("DATABASE_URL")
 }
 

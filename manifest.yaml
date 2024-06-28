@@ -9,7 +9,7 @@ oauth_config:
       - channels:read
 settings:
   event_subscriptions:
-    request_url: https://23be-173-54-147-213.ngrok-free.app/slack
+    request_url: https://crane-enjoyed-presumably.ngrok-free.app/slack
     user_events:
       - team_join
       - user_change

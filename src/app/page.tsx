@@ -7,6 +7,7 @@ import Link from "next/link";
 interface User {
     name: string
     id: string
+    slack_id: string
     createdAt: string
     updatedAt: string
 }
@@ -21,7 +22,7 @@ export default function HomePage() {
     const {data}:UserResponse = await res.json()  // eslint-disable-line
     setRows(data)
   }
-//   console.log(rows)
+
   useEffect(()=>{
     fetchRows() // eslint-disable-line
   }, [])
@@ -54,12 +55,12 @@ export default function HomePage() {
                     <tbody>
                         {rows.map((row)=>{
                             return (
-                                <tr key={row.id}className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
+                                <tr key={row.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                     <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                         {row.name}
                                     </th>
                                     <td className="px-6 py-4">
-                                        {row.id}
+                                        {row.slack_id}
                                     </td>
                                     <td className="px-6 py-4">
                                         {row.createdAt}
@@ -74,10 +75,15 @@ export default function HomePage() {
                     </tbody>
                 </table>
             </div>
-            <div className="flex max-w-xs flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
-                <Link href={'https://slack.com'}><h3 className="text-2xl font-bold">Slack Workspace →</h3></Link>
+            <div className="flex flex-col gap-4 rounded-xl bg-white/10 p-4 text-white hover:bg-white/20">
+                <Link href={'https://join.slack.com/t/mandrel-submission/shared_invite/zt-2l9l5kntj-BOvQgfIZ3GukGj~RfOWUxw'}>
+                    <h3 className="text-2xl font-bold">Slack Workspace →</h3>
+                </Link>
+                <Link href={'https://github.com/chrisperez626/mandrel-submission'}>
+                    <h3 className="text-2xl font-bold">Github Repo →</h3>
+                </Link>
                 <div className="text-lg">
-                    Here is a table of users from the slack workspace MANDREL SUBMISSION
+                    Here is a table of users from the slack workspace mandrel-submission.
                 </div>
             </div>
         </div>

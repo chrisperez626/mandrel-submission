@@ -23,8 +23,9 @@ export async function POST(request:NextRequest){
             const result = await client.users.list({});
             if(result.ok && result.members){
                 result.members.forEach(async (member)=>{ //eslint-disable-line
-                    if (!member.deleted){
-                        console.log()
+                    console.log(member)
+                    const user = await db.user.findUnique({where:{slack_id:member.id}})
+                    if (!member.deleted && !user){
                         const user = {
                             slack_id: member.id ? member.id: "",
                             name: member.real_name ? member.real_name: ""
@@ -33,11 +34,10 @@ export async function POST(request:NextRequest){
                     }
                 })
             }
-            console.log(result)
-          }
-          catch (error) {
+        }
+        catch (error) {
             console.error(error);
-          }
+        }
         return NextResponse.json(challenge.challenge)
     }else{
         const {event} = data // eslint-disable-line
@@ -51,7 +51,6 @@ export async function POST(request:NextRequest){
                     })
                 }
                 else{
-                    console.log(event)
                     const user = await db.user.findUnique({
                         where: {    
                           slack_id: event.user.id,
@@ -64,7 +63,10 @@ export async function POST(request:NextRequest){
                                 name: event.user.real_name
                             }
                         })    
-                    }    
+                    }else if(!event.user.deleted){
+                        const {id, real_name} = event.user
+                        await db.user.create({data: {slack_id:id, name: real_name}})
+                    }   
                 }
                 break;
             case 'team_join':
